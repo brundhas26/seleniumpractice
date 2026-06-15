@@ -20,11 +20,11 @@ pipeline {
             }
         }
 
-        stage('Run Selenium') {
-            steps {
-                sh 'mvn exec:java -Dexec.mainClass=com.example.App'
-            }
-        }
+       stage('Run Selenium') {
+    steps {
+        sh 'mvn exec:java -Dexec.mainClass=com.demo.App'
+    }
+}
     }
 
     post {
