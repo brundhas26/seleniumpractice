@@ -3,15 +3,20 @@ package com.demo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class App {
 
     public static void main(String[] args) {
 
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        WebDriver driver = new ChromeDriver(options);
 
         driver.get("https://www.saucedemo.com/");
-        driver.manage().window().maximize();
 
         driver.findElement(By.id("user-name"))
               .sendKeys("standard_user");
@@ -22,10 +27,13 @@ public class App {
         driver.findElement(By.id("login-button"))
               .click();
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        String currentUrl = driver.getCurrentUrl();
+        System.out.println("Current URL: " + currentUrl);
+
+        if(currentUrl.contains("inventory.html")) {
+            System.out.println("LOGIN SUCCESSFUL");
+        } else {
+            System.out.println("LOGIN FAILED");
         }
 
         driver.quit();
