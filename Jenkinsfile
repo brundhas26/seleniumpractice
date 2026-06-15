@@ -10,13 +10,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/brundhas26/newselenium.git'
+                    url: ' https://github.com/brundhas26/seleniumpractice.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean compile'
+                sh 'mvn clean package'
             }
         }
 
@@ -29,15 +29,12 @@ pipeline {
 
     post {
         success {
-            echo 'Selenium Test Executed Successfully'
+            echo 'Login Successful'
+            echo 'Expected Inventory Page: https://www.saucedemo.com/inventory.html'
         }
 
         failure {
-            echo 'Build Failed'
-        }
-
-        always {
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+            echo 'Build FAILED'
         }
     }
 }
